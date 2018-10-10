@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from bbs.models import Bbs
 
@@ -8,7 +9,7 @@ class BbsSerializer(serializers.ModelSerializer):
         model = Bbs
         fields = ('id', 'title', 'author', 'pw', 'content')
 
-    # 신규 Bbs instance를 생성해서 리턴해준다
+    # 신규 Bbs instance 를 생성해서 리턴해준다
     def create(self, validated_data):
         return Bbs.objects.create(**validated_data)
 
@@ -20,4 +21,18 @@ class BbsSerializer(serializers.ModelSerializer):
         instance.content = validated_data.get('content', instance.content)
         instance.save()
         return instance
+
+
+# 사용자 목록
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('url', 'username', 'email', 'groups')
+
+
+# 사용자 그룹
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('url', 'name')
 

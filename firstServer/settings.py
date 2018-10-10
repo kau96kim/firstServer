@@ -42,6 +42,13 @@ INSTALLED_APPS = [
     'bbs',
 ]
 
+# 인증 클래스 추가 - 인증된 사용자만 접근가능
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
