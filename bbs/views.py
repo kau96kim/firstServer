@@ -1,32 +1,42 @@
 # 클래스 기반의 Rest CRUD 처리
-from bbs.models import Bbs
-from bbs.serializers import BbsSerializer, UserSerializer, GroupSerializer
+from bbs.models import Bbs, Events
+from bbs.serializers import BbsSerializer, UserSerializer, GroupSerializer, EventsSerializer
 from rest_framework import generics, viewsets
 from django.contrib.auth.models import User, Group
 
 
 # generics 에 목록과 생성 API 가 정의되어 있다
 class BbsList(generics.ListCreateAPIView):
-    queryset = Bbs.objects.all()
+    queryset = Bbs.objects.using('default').all()
     serializer_class = BbsSerializer
 
 
 # generics 에 상세, 수정, 삭제 API 가 정의되어 있다
 class BbsDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Bbs.objects.all()
+    queryset = Bbs.objects.using('default').all()
     serializer_class = BbsSerializer
 
 
 # 사용자 목록을 화면에 뿌려주는 ViewSet
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.using('default').all()
     serializer_class = UserSerializer
 
 
 # 그룹목록을 화면에 뿌려주는 ViewSet
 class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all()
+    queryset = Group.objects.using('default').all()
     serializer_class = GroupSerializer
+
+
+class EventsList(generics.ListAPIView):
+    queryset = Events.objects.using('sungbak').all()
+    serializer_class = EventsSerializer
+
+
+class EventsDetail(generics.RetrieveAPIView):
+    queryset = Events.objects.using('sungbak').all()
+    serializer_class = EventsSerializer
 
 
 """

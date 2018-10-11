@@ -32,5 +32,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('memo/', include('memo.urls')),
     path('bbs/', include('bbs.urls')),
+    path('events/', include('bbs.eventsUrls')),
 ]
 
